@@ -1,20 +1,32 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import Layout from '@/layout/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: 'home' */ '@/views/home/index.vue')
-  },
   {
     path: '/login',
     name: 'login',
     component: () => import(/* webpackChunkName: 'login' */ '@/views/login/index.vue')
   },
   {
-    path: '/course',
-    name: 'course',
-    component: () => import(/* webpackChunkName: 'course' */ '@/views/course/index.vue')
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import(/* webpackChunkName: 'home' */ '@/views/home/index.vue')
+      },
+      {
+        path: '/course',
+        name: 'course',
+        component: () => import(/* webpackChunkName: 'course' */ '@/views/course/index.vue')
+      },
+      {
+        path: '/resource',
+        name: 'resource',
+        component: () => import(/* webpackChunkName: 'resource' */ '@/views/resource/index.vue')
+      }
+    ]
   },
   {
     path: '/:pathMatch(.*)',
