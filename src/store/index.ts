@@ -7,7 +7,7 @@ export default createStore({
   mutations: {
     setUser (state, payload) {
       state.user = {
-        token: payload.token
+        ...payload
       }
       // 为了防止页面刷新，数据丢失,数据持久化
       localStorage.setItem('user', JSON.stringify(payload))

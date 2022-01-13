@@ -1,22 +1,25 @@
 <template>
   <div class="login-con">
     <el-form
-    ref="formRef"
-    class="login-form"
-    :model="form"
-    label-width="120px"
-    :rules="rules"
-    :label-position="'top'">
-    <el-form-item label="手机号" prop="tel">
-      <el-input v-model="form.tel"></el-input>
-    </el-form-item>
-    <el-form-item label="密码" prop="pwd">
-      <el-input v-model="form.pwd" type="password"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit(formRef)" class="login-btn">登录</el-button>
-    </el-form-item>
-  </el-form>
+      ref="formRef"
+      class="login-form"
+      :model="form"
+      label-width="120px"
+      :rules="rules"
+      :label-position="'top'"
+    >
+      <el-form-item label="手机号" prop="tel">
+        <el-input v-model="form.tel"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" prop="pwd">
+        <el-input v-model="form.pwd" type="password"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit(formRef)" class="login-btn"
+          >登录</el-button
+        >
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ import { defineComponent, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import type { ElForm } from 'element-plus'
 import { useStore } from 'vuex'
+import { ElMessage } from 'element-plus'
 
 export default defineComponent({
   setup () {
@@ -64,7 +68,11 @@ export default defineComponent({
         if (valid) {
           // TODO 缺少登录接口
           store.commit('setUser', { token: token.value })
-          router.push(route.query.redirect as string || '/')
+          router.push((route.query.redirect as string) || '/')
+          ElMessage({
+            message: '登录成功',
+            type: 'success'
+          })
         } else {
           console.log('error submit!')
           return false
@@ -83,20 +91,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .login-con{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #E9EEF3;
-    .login-form{
-      background: #fff;
-      width: 300px;
-      padding: 70px;
-      border-radius: 5px;
-    }
-    .login-btn{
-      width: 100%;
-    }
+.login-con {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9eef3;
+  .login-form {
+    background: #fff;
+    width: 300px;
+    padding: 70px;
+    border-radius: 5px;
   }
+  .login-btn {
+    width: 100%;
+  }
+}
 </style>

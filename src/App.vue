@@ -1,8 +1,6 @@
 <template>
   <!-- 根路由的出口 -->
-  <router-view/>
+  <router-view />
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
