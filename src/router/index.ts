@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
-
+import store from '@/store'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
@@ -10,6 +10,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: Layout,
+    // 只有经过身份验证的用户,自定义数据
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -38,6 +40,25 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+  // console.log(to, from)
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.user) {
+      next({
+        name: 'login',
+        query: {
+          redirect: to.fullPath // 登录成功需要返回的页面
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

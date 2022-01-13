@@ -22,13 +22,17 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import type { ElForm } from 'element-plus'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   setup () {
     const formRef = ref<InstanceType<typeof ElForm>>()
+    const token = ref('kkkkkddkeeeeeeee')
+    const store = useStore()
     const router = useRouter()
+    const route = useRoute()
     const form = reactive({
       tel: '18233221111',
       pwd: '111111'
@@ -58,7 +62,9 @@ export default defineComponent({
       }
       formEl.validate((valid) => {
         if (valid) {
-          router.push({ name: 'home' })
+          // TODO 缺少登录接口
+          store.commit('setUser', { token: token.value })
+          router.push(route.query.redirect as string || '/')
         } else {
           console.log('error submit!')
           return false
