@@ -1,10 +1,14 @@
 <template>
   <div class="aside">
+    <div class="fold" @click="isToggle">
+      <el-icon><fold /></el-icon>
+    </div>
     <el-menu
       active-text-color="#ffd04b"
       background-color="#545c64"
       class="el-menu-vertical-demo"
       default-active="2"
+      :collapse="isCollapse"
       text-color="#fff"
       @open="handleOpen"
       @close="handleClose"
@@ -33,14 +37,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { Location } from '@element-plus/icons-vue'
+import { defineComponent, ref } from 'vue'
+import { Location, Fold } from '@element-plus/icons-vue'
 
 export default defineComponent({
   components: {
-    Location
+    Location,
+    Fold
   },
   setup () {
+    const isCollapse = ref(false)
     const handleOpen = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
@@ -48,9 +54,15 @@ export default defineComponent({
       console.log(key, keyPath)
     }
 
+    const isToggle = () => {
+      // isCollapse = !isCollapse.value
+    }
+
     return {
       handleOpen,
-      handleClose
+      handleClose,
+      isCollapse,
+      isToggle
     }
   }
 })
