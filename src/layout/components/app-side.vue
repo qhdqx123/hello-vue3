@@ -1,6 +1,6 @@
 <template>
   <div class="aside">
-    <div class="fold" @click="isToggle">
+    <div class="fold" @click="isCollapse = !isCollapse">
       <el-icon><fold /></el-icon>
     </div>
     <el-menu
@@ -54,15 +54,10 @@ export default defineComponent({
       console.log(key, keyPath)
     }
 
-    const isToggle = () => {
-      // isCollapse = !isCollapse.value
-    }
-
     return {
       handleOpen,
       handleClose,
-      isCollapse,
-      isToggle
+      isCollapse
     }
   }
 })
